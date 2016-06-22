@@ -27,7 +27,7 @@ make build
 npm run dev
 ```
 
-Visit http://localhost:15638/ to see HelloWorld demo
+Visit http://localhost:3000/ to see HelloWorld web page demo
 
 *4*. Generate API documents
 
