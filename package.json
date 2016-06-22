@@ -1,0 +1,51 @@
+{
+  "name": "eva_skeleton",
+  "version": "0.0.1",
+  "description": "A skeleton project based on EvaEngine ",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bmqb/bmqb_debit.git"
+  },
+  "scripts": {
+    "start": "NODE_ENV=production node --harmony ./build/app.js",
+    "test": "NODE_ENV=test LOG_LEVEL=error node --harmony ./node_modules/.bin/mocha --harmony --compilers js:babel-core/register --require babel-polyfill --recursive",
+    "crontab": "NODE_ENV=production babel-node --harmony ./src/crontab",
+    "coverage": "NODE_ENV=test ./node_modules/.bin/babel-node --harmony ./node_modules/.bin/isparta cover ./node_modules/.bin/_mocha -- --recursive",
+    "dev": "nodemon --exec babel-node --harmony ./src/app.js",
+    "swagger": "rm -rf ./build && npm run build && node --harmony build/swagger/app.js",
+    "swagger-dev": "rm -rf ./build && npm run build && nodemon --ignore 'node_modules/*' --ignore '**/*.json' --exec babel-node --harmony src/swagger.js",
+    "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "build": "babel -d build/ src/"
+  },
+  "engines": {
+    "node": ">=4.4.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.7.1",
+    "evaengine": "^0.0.15",
+    "mysql": "^2.11.1",
+    "pug": "^2.0.0-beta3",
+    "sequelize": "^3.22.0",
+    "serve-favicon": "^2.3.0",
+    "serve-static": "^1.11.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.7.7",
+    "babel-eslint": "^6.0.4",
+    "babel-plugin-transform-builtin-extend": "^1.1.0",
+    "babel-polyfill": "^6.7.4",
+    "babel-preset-es2015-node4": "^2.1.0",
+    "babel-preset-stage-3": "^6.5.0",
+    "babel-register": "^6.5.2",
+    "chai": "^3.5.0",
+    "eslint": "^2.12.0",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-react": "^5.2.1",
+    "isparta": "^4.0.0",
+    "mocha": "^2.4.5",
+    "node-mocks-http": "^1.5.2"
+  }
+}
