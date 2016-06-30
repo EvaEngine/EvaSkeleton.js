@@ -1,0 +1,40 @@
+source:
+    build: ./source
+    container_name: eva_source
+    volumes:
+      - ~/opt/htdocs/EvaSkeleton.js:/opt/htdocs/EvaSkeleton.js
+
+nginx:
+    build: ./nginx
+    container_name: eva_nginx
+    ports:
+      - "80:80"
+    links:
+      - "node"
+    volumes_from:
+      - source
+
+node:
+    build: ./nodejs
+    container_name: eva_node
+    ports:
+      - "19000:19000"
+    links:
+      - "redis"
+      - "mysql"
+    volumes_from:
+      - source
+
+mysql:
+    build: ./mysql
+    container_name: eva_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: huaerjie001
+
+redis:
+    build: ./redis
+    container_name: eva_redis
+    ports:
+      - "6379:6379"
