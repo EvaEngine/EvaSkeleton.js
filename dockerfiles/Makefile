@@ -1,11 +1,8 @@
 pull:
-	docker pull nginx:1.9
-	docker pull php:5.6-fpm
-	docker pull mysql:5.6
-	docker pull redis:3.0
-	docker pull memcached:1.4
-	docker pull elasticsearch:1.5
-	docker pull node:5.3
+	docker pull nginx:stable
+	docker pull mysql:5.7
+	docker pull redis:3
+	docker pull node:4
 
 build-all:
 	make build-source
@@ -23,7 +20,7 @@ build-nginx:
 	docker build -t eva-nginx ./nginx
 
 run-nginx:
-	docker run -it -d -p 80:80 -p 443:443 --volumes-from eva_source --name eva_nginx -t eva-nginx
+	docker run -it -d -p 80:80 -p 443:443 --volumes-from eva_source --name eva_nginx --link eva_node:eva_node -t eva-nginx
 
 in-nginx:
 	docker exec -it eva_nginx /bin/bash
@@ -41,7 +38,7 @@ build-node:
 	docker build -t eva-node ./nodejs
 
 run-node:
-	docker run -it -d -p 19000:19000 --volumes-from eva_source --name eva_node -t eva-node
+	docker run -it -d -p 19000:19000 --volumes-from eva_source --name eva_node --link eva_redis:eva_redis -t eva-node
 
 in-node:
 	docker exec -it eva_node /bin/bash
