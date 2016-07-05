@@ -14,12 +14,20 @@ install:
 	gulp build
 	npm run build
 
-docker-build:
-	mkdir -p /tmp/npm
-	docker run -v /tmp/npm:/root/.npm -v $(shell pwd -P):/opt/htdocs/EvaSkeleton.js --rm -it eva-node npm install --verbose
-
 migrate:
 	sequelize db:migrate
 
 seeder:
 	sequelize db:seed:all --harmony
+
+docker-pre-build:
+	cd dockerfiles && docker-compose build
+
+docker-build:
+	git pull
+	docker run -v $(shell pwd -P):/opt/htdocs/EvaSkeleton.js --rm -it evaskeleton-node npm install
+	docker run -v $(shell pwd -P):/opt/htdocs/EvaSkeleton.js --rm -it evaskeleton-node npm run build
+
+docker-up:
+	cd dockerfiles && docker-compose up
+

@@ -1,35 +1,49 @@
-eva_skeleton_source:
-    build: ./source
-    volumes:
-      - ~/opt/htdocs/EvaSkeleton.js:/opt/htdocs/EvaSkeleton.js
+version: '2'
+services:
+  evaskeleton_source:
+      build: ./source
+      image: evaskeleton-source
+      container_name: evaskeleton_source
+      volumes:
+        - ./../:/opt/htdocs/EvaSkeleton.js
 
-eva_skeleton_nginx:
-    build: ./nginx
-    ports:
-      - "80:80"
-    links:
-      - eva_skeleton_node
-    volumes_from:
-      - eva_skeleton_source
+  evaskeleton_node:
+      build: ./nodejs
+      image: evaskeleton-node
+      container_name: evaskeleton_node
+#      ports:
+#        - "19000:19000"
+      links:
+        - evaskeleton_redis
+        - evaskeleton_mysql
+      volumes_from:
+        - evaskeleton_source
 
-eva_skeleton_node:
-    build: ./nodejs
-    ports:
-      - "19000:19000"
-    links:
-      - eva_skeleton_redis
-      - eva_skeleton_mysql
-    volumes_from:
-      - eva_skeleton_source
+  evaskeleton_nginx:
+      build: ./nginx
+      image: evaskeleton-nginx
+      container_name: evaskeleton_nginx
+      ports:
+        - "80:80"
+      links:
+        - evaskeleton_node
+      volumes_from:
+        - evaskeleton_source
 
-eva_skeleton_mysql:
-    build: ./mysql
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
 
-eva_skeleton_redis:
-    build: ./redis
-    ports:
-      - "6379:6379"
+  evaskeleton_mysql:
+      build: ./mysql
+      image: evaskeleton-mysql
+      container_name: evaskeleton_mysql
+#      ports:
+#        - "3306:3306"
+      environment:
+        MYSQL_DATABASE: evaskeleton
+        MYSQL_ROOT_PASSWORD: 123456
+
+  evaskeleton_redis:
+      build: ./redis
+      image: evaskeleton-redis
+      container_name: evaskeleton_redis
+#      ports:
+#        - "6379:6379"

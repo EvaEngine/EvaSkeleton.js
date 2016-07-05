@@ -2,6 +2,10 @@ module.exports = {
   sequelize: {
     logging: false
   },
+  redis: {
+    host: 'evaskeleton_redis',
+    port: 6379
+  },
   db: {
     database: 'YourDatabase',
     replication: {

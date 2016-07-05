@@ -23,6 +23,6 @@ export class HelloWorld extends Command {
     if (id) {
       return logger.info('Hello world %s!', id);
     }
-    logger.info('Hello world!');
+    return logger.info('Hello world!');
   }
 }

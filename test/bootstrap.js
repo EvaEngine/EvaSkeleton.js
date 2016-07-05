@@ -1,5 +1,5 @@
 import { EvaEngine, DI, utils } from 'evaengine';
-import chai from 'chai';
+import test from 'ava';
 
 const engine = new EvaEngine({
   projectRoot: `${__dirname}/..`,
@@ -11,6 +11,5 @@ global.p = (...args) => {
   DI.get('logger').debug(...args);
 };
 
-module.exports = Object.assign(utils.test, {
-  assert: chai.assert
-});
+module.exports = utils.test;
+module.exports.test = test;
