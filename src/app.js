@@ -25,6 +25,7 @@ const config = DI.get('config').get();
 const session = DI.get('session')();
 const auth = DI.get('auth')();
 
+app.use(DI.get('trace')('eva_skeleton'));
 app.use(DI.get('debug')());
 app.use(express.static(path.join(__dirname, '/../public')));
 app.use(cors({

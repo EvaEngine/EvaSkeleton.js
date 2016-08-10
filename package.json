@@ -49,7 +49,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "cors": "^2.7.1",
-    "evaengine": "^0.0.21",
+    "evaengine": "^0.1.8",
     "mysql": "^2.11.1",
     "pug": "^2.0.0-beta3",
     "sequelize": "^3.22.0",

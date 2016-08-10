@@ -31,7 +31,7 @@ services:
       volumes_from:
         - evaskeleton_source
       environment:
-        VIRTUAL_HOST: skeleton.evaengine.com
+        VIRTUAL_HOST: skeleton2.evaengine.com
         VIRTUAL_PORT: 80
       networks:
         - default
