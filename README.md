@@ -2,6 +2,19 @@
 
 A Skeleton project based on [EvaEngine.js](https://github.com/EvaEngine/EvaEngine.js)
 
+## Start with one line code:
+
+Prepare a empty directory:
+
+```
+mkdir myproject
+cd myproject
+```
+
+``` shell
+wget https://github.com/EvaEngine/EvaSkeleton.js/archive/master.tar.gz -O master.tar.gz && tar xvf master.tar.gz --strip 1 && rm master.tar.gz
+```
+
 ## Install and Start develop:
 
 Requirements:
