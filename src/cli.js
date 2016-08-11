@@ -25,5 +25,9 @@ global.p = (...args) => {
     }
     logger.error(e);
   }
+  const redis = DI.get('redis');
+  if (redis.isConnected()) {
+    redis.cleanup();
+  }
   return true;
 })();
