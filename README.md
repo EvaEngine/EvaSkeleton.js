@@ -1,5 +1,9 @@
 # EvaSkeleton.js
 
+[![Build Status](https://travis-ci.org/EvaEngine/EvaSkeleton.js.svg?branch=master)](https://travis-ci.org/EvaEngine/EvaSkeleton.js)
+[![Dependencies Status](https://david-dm.org/EvaEngine/EvaSkeleton.js.svg)](https://david-dm.org/EvaEngine/EvaSkeleton.js)
+[![License](https://img.shields.io/npm/l/evaengine.svg?maxAge=2592000?style=plastic)](https://github.com/EvaEngine/EvaSkeleton.js/blob/master/LICENSE)
+
 A Skeleton project based on [EvaEngine.js](https://github.com/EvaEngine/EvaEngine.js)
 
 ## Start with one line code:
