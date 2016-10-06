@@ -75,9 +75,9 @@ docker-push:
 	@export VERSION=$(shell git describe --tags); \
 	export MACHINE_IP=$(shell ipconfig getifaddr en0); \
 	echo "Start push docker images with tag $${VERSION}"; \
-	docker push registry-internal.cn-hangzhou.aliyuncs.com/bmqb/evaskeleton-source:$${VERSION}; \
-	docker push registry-internal.cn-hangzhou.aliyuncs.com/bmqb/evaskeleton-node:$${VERSION}; \
-	docker push registry-internal.cn-hangzhou.aliyuncs.com/bmqb/evaskeleton-nginx:$${VERSION};
+	docker push evaengine/evaskeleton-source:$${VERSION}; \
+	docker push evaengine/evaskeleton-node:$${VERSION}; \
+	docker push evaengine/evaskeleton-nginx:$${VERSION};
 	make docker-gen
 
 docker-up:
