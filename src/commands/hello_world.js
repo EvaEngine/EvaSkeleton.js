@@ -1,6 +1,6 @@
 import { Command, DI } from 'evaengine';
 
-export class HelloWorld extends Command {
+export default class HelloWorld extends Command {
   static getName() {
     return 'hello:world';
   }
@@ -26,3 +26,4 @@ export class HelloWorld extends Command {
     return logger.info('Hello world!');
   }
 }
+
