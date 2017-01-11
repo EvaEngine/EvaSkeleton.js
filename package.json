@@ -16,7 +16,7 @@
     "dev": "nodemon --exec babel-node ./src/app.js",
     "swagger": "rm -rf ./build && npm run build && node build/swagger/app.js",
     "swagger-dev": "rm -rf ./build && npm run build && nodemon --ignore 'node_modules/*' --ignore '**/*.json' --exec babel-node src/swagger.js",
-    "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "lint": "./node_modules/.bin/eslint src/* --ext .js",
     "build": "babel -d build/ src/"
   },
   "ava": {
@@ -31,7 +31,8 @@
     "failFast": true,
     "tap": false,
     "require": [
-      "babel-core/register"
+      "babel-core/register",
+      "babel-polyfill"
     ],
     "babel": "inherit"
   },
@@ -44,31 +45,36 @@
     ]
   },
   "engines": {
-    "node": ">=6.7.0"
+    "node": ">=6.9.1"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "dependencies": {
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
-    "evaengine": "^0.1.24",
+    "evaengine": "^0.2.7",
     "pug": "^2.0.0-beta3",
-    "serve-favicon": "^2.3.0",
+    "serve-favicon": "^2.3.2",
     "serve-static": "^1.11.1"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
-    "babel-cli": "^6.16.0",
-    "babel-core": "^6.17.0",
-    "babel-eslint": "^7.0.0",
-    "babel-plugin-transform-builtin-extend": "^1.1.0",
+    "ava": "^0.17.0",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-polyfill": "^6.16.0",
-    "babel-preset-es2015-node4": "^2.1.0",
+    "babel-plugin-transform-object-rest-spread": "^6.20.2",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-es2015-node6": "^0.4.0",
     "babel-preset-stage-3": "^6.17.0",
-    "eslint": "^3.7.1",
-    "eslint-plugin-import": "^2.0.0",
-    "eslint-config-airbnb": "^12.0.0",
-    "eslint-plugin-jsx-a11y": "^2.2.2",
-    "eslint-plugin-react": "^6.3.0",
-    "nyc": "^8.3.0"
+    "eslint": "^3.13.1",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.9.0",
+    "nock": "^9.0.2",
+    "nyc": "^10.0.0",
+    "pre-commit": "^1.2.2"
   }
 }

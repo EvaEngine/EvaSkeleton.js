@@ -2,6 +2,12 @@
   "parser": "babel-eslint",
   "extends": "airbnb",
   "rules": {
+    "class-methods-use-this": [
+      0
+    ],
+    "no-continue": [
+      0
+    ],
     "comma-dangle": [
       1,
       "never"
@@ -9,6 +15,23 @@
     "spaced-comment": [
       0,
       "always"
+    ],
+    "no-restricted-syntax": [
+      "error",
+      "ForInStatement",
+      "LabeledStatement",
+      "WithStatement"
+    ],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "ignore",
+        "asyncArrow": "ignore"
+      }
+    ],
+    "no-await-in-loop": [
+      0
     ]
   }
 }
