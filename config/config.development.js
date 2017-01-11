@@ -2,6 +2,9 @@ module.exports = {
   sequelize: {
     logging: false
   },
+  logger: {
+    file: false
+  },
   redis: {
     host: 'evaskeleton_redis',
     port: 6379

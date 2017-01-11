@@ -1,4 +1,4 @@
-import { EvaEngine, DI, wrapper, exceptions } from 'evaengine';
+import { EvaEngine, wrapper, exceptions } from 'evaengine';
 
 const router = EvaEngine.createRouter();
 

@@ -1,6 +1,6 @@
 import { EvaEngine, DI, wrapper, swagger } from 'evaengine';
-import models from './entities';
 import serveStatic from 'serve-static';
+import models from './entities';
 
 const engine = new EvaEngine({
   projectRoot: `${__dirname}/..`,

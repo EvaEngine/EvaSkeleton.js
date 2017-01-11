@@ -14,7 +14,7 @@
     "crontab": "NODE_ENV=production babel-node ./src/crontab",
     "coverage": "nyc -a --reporter=lcov --reporter=text --reporter=html npm run ava",
     "dev": "nodemon --exec babel-node ./src/app.js",
-    "swagger": "rm -rf ./build && npm run build && node build/swagger/app.js",
+    "swagger": "rm -rf ./build && npm run build && node build/swagger.js",
     "swagger-dev": "rm -rf ./build && npm run build && nodemon --ignore 'node_modules/*' --ignore '**/*.json' --exec babel-node src/swagger.js",
     "lint": "./node_modules/.bin/eslint src/* --ext .js",
     "build": "babel -d build/ src/"
