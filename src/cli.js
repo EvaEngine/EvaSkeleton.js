@@ -13,14 +13,13 @@ global.p = (...args) => {
   logger.debug(...args);
 };
 
+
 (async() => {
   try {
     await engine.runCLI();
   } catch (e) {
-    if (e instanceof exceptions.LogicException) {
-      if (e instanceof exceptions.FormInvalidateException) {
-        return logger.warn(e.getDetails());
-      }
+    if (e instanceof exceptions.StandardException) {
+      logger.warn(e.getDetails());
       return logger.warn(e.message);
     }
     logger.error(e);
