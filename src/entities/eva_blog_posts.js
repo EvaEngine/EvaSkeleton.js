@@ -1,4 +1,5 @@
 import merge from 'lodash/merge';
+import { DI } from 'evaengine';
 import schema from './schemas/eva_blog_posts';
 
 module.exports = function (sequelize, DataTypes) {
@@ -10,8 +11,25 @@ module.exports = function (sequelize, DataTypes) {
           as: 'text',
           foreignKey: 'postId'
         });
+        BlogPosts.belongsToMany(entities.BlogTags, {
+          as: 'tags',
+          through: {
+            model: entities.BlogTagsPosts,
+            unique: false
+          },
+          constraints: false,
+          foreignKey: 'postId',
+          otherKey: 'tagId'
+        });
       }
     }
   }));
+  BlogPosts.beforeCreate((entity) => {
+    entity.createdAt = DI.get('now').getTimestamp();
+    entity.updatedAt = DI.get('now').getTimestamp();
+  });
+  BlogPosts.beforeUpdate((entity) => {
+    entity.updatedAt = DI.get('now').getTimestamp();
+  });
   return BlogPosts;
 };

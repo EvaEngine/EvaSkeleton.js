@@ -3,12 +3,19 @@ import entities from '../entities';
 
 export default class BlogPost {
 
-  async get(slug, deletedAt = 0) {
+  async get(idOrslug, deletedAt = 0) {
+    const where = /^\d+$/.test(idOrslug) ? { id: idOrslug } : { slug: idOrslug };
     return entities.get('BlogPosts').findOne({
-      where: {
-        slug,
+      where: Object.assign(where, {
         deletedAt
-      },
+      }),
+      include: [{
+        model: entities.get('BlogTexts'),
+        as: 'text'
+      }, {
+        model: entities.get('BlogTags'),
+        as: 'tags'
+      }],
       order: [['createdAt', 'DESC'], ['id', 'DESC']]
     });
   }

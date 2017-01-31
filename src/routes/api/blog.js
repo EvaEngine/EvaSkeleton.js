@@ -52,7 +52,7 @@ router.get('/posts', wrapper(async(req, res) => {
   ], 'createdAt', 'DESC');
 
   // const { uid } = req.auth;
-  // where.deletedAt = 0;
+  const where = { deletedAt: 0 };
   let { order } = req.query;
   order = orderScaffold.getOrderByQuery(order);
 
@@ -61,11 +61,7 @@ router.get('/posts', wrapper(async(req, res) => {
     offset,
     limit,
     order,
-    // where,
-    // include: [{
-    //   model: entities.get('BlogTexts'),
-    //   as: 'text'
-    // }]
+    where
   });
   return res.json({
     pagination: utils.pagination({

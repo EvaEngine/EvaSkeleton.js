@@ -50,7 +50,7 @@ const auth = DI.get('auth')();
              results:
                type: array
                items:
-                 $ref: '#/definitions/Posts'
+                 $ref: '#/definitions/BlogPosts'
  */
 //@formatter:on
 router.get('/posts', wrapper(async(req, res) => {
@@ -97,15 +97,15 @@ router.get('/posts', wrapper(async(req, res) => {
          description: Post info
          required: true
          schema:
-           $ref: '#/definitions/Post'
+           $ref: '#/definitions/BlogPosts'
      responses:
        200:
          schema:
            type: object
-           $ref: '#/definitions/Post'
+           $ref: '#/definitions/BlogPosts'
  */
 //@formatter:on
-router.post('/', auth, validator(v => ({
+router.post('/posts', auth, validator(v => ({
   body: {
     title: v.required(),
     status: v.string().allow(['draft', 'published']).optional()
@@ -178,14 +178,10 @@ router.put('/posts/:id', auth, validator(v => ({
  */
 //@formatter:on
 router.get('/posts/:id', auth, wrapper(async(req, res) => {
-  const result = await entities.get('BlogPosts').findOne({
-    where: { id: req.params.id }
-  });
-
+  const result = await (new models.BlogPost()).get(req.params.id);
   if (!result) {
     throw new exceptions.ResourceNotFoundException('Post not found');
   }
-
   res.json(result);
 }));
 
