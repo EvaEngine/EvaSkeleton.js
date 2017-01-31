@@ -3,6 +3,15 @@ import schema from './schemas/eva_blog_posts';
 
 module.exports = function (sequelize, DataTypes) {
   const { columns, table } = schema(DataTypes);
-  const entity = sequelize.define('BlogPosts', merge(columns, {}), merge(table, {}));
-  return entity;
+  const BlogPosts = sequelize.define('BlogPosts', merge(columns, {}), merge(table, {
+    classMethods: {
+      associate: (entities) => {
+        BlogPosts.hasOne(entities.BlogTexts, {
+          as: 'text',
+          foreignKey: 'postId'
+        });
+      }
+    }
+  }));
+  return BlogPosts;
 };

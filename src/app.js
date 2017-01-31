@@ -33,8 +33,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //-----------Routers Start
-app.use('/', require('./routes/index'));
-app.use('/v1', require('./routes/api/hello_world'));
+const session = DI.get('session')();
+const auth = DI.get('auth')();
+app.use('/v1/blog', require('./routes/api/blog'));
+app.use('/v1/manage/blog', session, auth, require('./routes/manage/blog'));
+// app.use('/', require('./routes/index'));
+// app.use('/v1', require('./routes/api/hello_world'));
 //-----------Routers End
 
 
