@@ -11,6 +11,10 @@ module.exports = function (sequelize, DataTypes) {
           as: 'text',
           foreignKey: 'postId'
         });
+        BlogPosts.hasMany(entities.BlogTagsPosts, {
+          as: 'tagsPosts',
+          foreignKey: 'postId'
+        });
         BlogPosts.belongsToMany(entities.BlogTags, {
           as: 'tags',
           through: {

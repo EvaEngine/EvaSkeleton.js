@@ -26,10 +26,30 @@ export default class BlogPost {
     if (errors) {
       throw new exceptions.ModelInvalidateException(errors);
     }
+    let { tags } = input;
+    if (tags && Array.isArray(tags)) {
+      tags = await Promise.all(tags.map(tag => entities.get('BlogTags').findOne({ where: { tagName: tag.tagName } }).then(t => t || tag)));
+      Object.assign(input, {
+        tagsPosts: tags.filter(t => t.id > 0).map(t => ({ tagId: t.id })),
+        tags: tags.filter(t => !t.id)
+      });
+    }
     let post = {};
     const transaction = await entities.getTransaction();
     try {
-      post = await entities.get('BlogPosts').create(input, { transaction });
+      post = await entities.get('BlogPosts').create(input, {
+        include: [{
+          model: entities.get('BlogTexts'),
+          as: 'text'
+        }, {
+          model: entities.get('BlogTags'),
+          as: 'tags'
+        }, {
+          model: entities.get('BlogTagsPosts'),
+          as: 'tagsPosts'
+        }],
+        transaction
+      });
       transaction.commit();
     } catch (e) {
       transaction.rollback();
