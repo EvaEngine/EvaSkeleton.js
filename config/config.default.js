@@ -6,22 +6,22 @@ module.exports = {
     file: `${__dirname}/../logs/application.log`
   },
   redis: {
-    host: '127.0.0.1',
-    port: 6379
+    host: process.env.REDIS_HOST || '127.0.0.1',
+    port: process.env.REDIS_PORT || 6379
   },
   db: {
     dialect: 'mysql',
-    port: 3306,
-    database: '',
+    port: process.env.DB_PORT || 3306,
+    database: process.env.DB_DATABASE || '',
     dialectOptions: {
       multipleStatements: true,
       timeout: 3
     },
     replication: {
       write: {
-        host: '',
-        username: '',
-        password: '',
+        host: process.env.DB_REPLICATION_WRITE_HOST || '',
+        username: process.env.DB_REPLICATION_WRITE_USERNAME || '',
+        password: process.env.DB_REPLICATION_WRITE_PASSWORD || '',
         pool: {}
       },
       read: [
@@ -63,7 +63,7 @@ module.exports = {
       description: 'EvaSkeleton API',
       version: '1.0'
     },
-    host: 'localhost:3000',
+    host: process.env.SWAGGER_HOST || 'localhost:3000',
     basePath: '/v1',
     schemes: [
       'http'

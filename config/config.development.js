@@ -5,23 +5,19 @@ module.exports = {
   logger: {
     file: false
   },
-  redis: {
-    host: 'evaskeleton_redis',
-    port: 6379
-  },
   db: {
     database: 'YourDatabase',
     replication: {
       write: {
-        host: 'MySQL_Master_host',
-        username: 'MySQL_Master_user',
-        password: 'MySQL_Master_password'
+        host: process.env.DB_REPLICATION_WRITE_HOST || 'MySQL_Master_host',
+        username: process.env.DB_REPLICATION_WRITE_USERNAME || 'MySQL_Master_user',
+        password: process.env.DB_REPLICATION_WRITE_PASSWORD || 'MySQL_Master_password'
       },
       read: [
         {
-          host: 'MySQL_Slave_host',
-          username: 'MySQL_Slave_user',
-          password: 'MySQL_Slave_password'
+          host: process.env.DB_REPLICATION_READ0_HOST || 'MySQL_Slave_host',
+          username: process.env.DB_REPLICATION_READ0_USERNAME || 'MySQL_Slave_user',
+          password: process.env.DB_REPLICATION_READ0_PASSWORD || 'MySQL_Slave_password'
         }
       ]
     }
