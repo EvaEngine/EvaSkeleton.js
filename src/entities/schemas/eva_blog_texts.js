@@ -1,8 +1,14 @@
 export default DataTypes => ({
   columns: {
-    postId: {
+    id: {
       allowNull: false,
       primaryKey: true,
+      type: DataTypes.INTEGER(10),
+      autoIncrement: true,
+      comment: 'ID'
+    },
+    postId: {
+      allowNull: false,
       type: DataTypes.INTEGER(20),
       comment: '文章ID'
     },

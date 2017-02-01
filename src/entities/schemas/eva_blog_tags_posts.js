@@ -1,14 +1,19 @@
 export default DataTypes => ({
   columns: {
-    tagId: {
+    id: {
       allowNull: false,
       primaryKey: true,
+      type: DataTypes.INTEGER(10),
+      autoIncrement: true,
+      comment: 'ID'
+    },
+    tagId: {
+      allowNull: false,
       type: DataTypes.INTEGER(10),
       comment: 'TAG ID'
     },
     postId: {
       allowNull: false,
-      primaryKey: true,
       type: DataTypes.INTEGER(10),
       comment: 'POST ID'
     }

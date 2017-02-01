@@ -141,6 +141,12 @@ export default DataTypes => ({
       allowNull: true,
       type: DataTypes.STRING,
       comment: '来源Url'
+    },
+    deletedAt: {
+      allowNull: false,
+      type: DataTypes.INTEGER(10),
+      defaultValue: '0',
+      comment: '删除时间'
     }
   },
   table: {

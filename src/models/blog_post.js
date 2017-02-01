@@ -55,16 +55,24 @@ export default class BlogPost {
       transaction.rollback();
       throw new exceptions.DatabaseIOException(e);
     }
-    return post;
+    return this.get(post.id);
   }
 
   async update(id, input, userId) {
     const entity = entities.get('BlogPosts');
-    const post = await entity.findById(id);
+    const post = await this.get(id);
 
     if (!post) {
       throw new exceptions.ResourceNotFoundException('Post not found');
     }
+
+    let { tags = [] } = input;
+    tags = await Promise.all(tags.map(tag => entities.get('BlogTags').findOne({ where: { tagName: tag.tagName } }).then(t => t || tag)));
+    Object.assign(input, {
+      tagsPosts: tags.filter(t => t.id > 0).map(t => ({ tagId: t.id, postId: post.id })),
+      tags: tags.filter(t => !t.id)
+    });
+
 
     const errors = await entity.build(input).validate();
     if (errors) {
@@ -73,11 +81,22 @@ export default class BlogPost {
     Object.assign(input, { userId });
     const transaction = await entities.getTransaction();
     try {
+      for (const tag of post.tags) {
+        await tag.BlogTagsPosts.destroy({ transaction });
+      }
+      for (const tag of input.tags) {
+        const t = await entities.get('BlogTags').create(tag, { transaction });
+        await post.addTags([t], { transaction });
+      }
+      // post.addTagsPosts(input.tagsPosts, { transaction });
+      for (const tagPost of input.tagsPosts) {
+        await entities.get('BlogTagsPosts').create(tagPost, { transaction });
+      }
+      //NOTE: update relations MUST before update main entity
+      await post.text.update(input.text, { transaction });
       await post.update(Object.assign(input, {
         updatedBy: userId
-      }), {
-        transaction
-      });
+      }), { transaction });
       await transaction.commit();
     } catch (e) {
       await transaction.rollback();

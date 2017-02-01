@@ -83,6 +83,36 @@ router.get('/posts', wrapper(async(req, res) => {
   });
 }));
 
+
+//@formatter:off
+/**
+ @swagger
+ /manage/blog/posts/{id}:
+   get:
+     summary: Get post info
+     tags:
+       - Manage_Blog
+     parameters:
+       - name: id
+         in: path
+         description: Post ID
+         required: true
+     responses:
+       200:
+         schema:
+           type: object
+           $ref: '#/definitions/BlogPosts'
+ */
+//@formatter:on
+router.get('/posts/:id', auth, wrapper(async(req, res) => {
+  const result = await (new models.BlogPost()).get(req.params.id);
+  if (!result) {
+    throw new exceptions.ResourceNotFoundException('Post not found');
+  }
+  res.json(result);
+}));
+
+
 //@formatter:off
 /**
  @swagger
@@ -155,34 +185,6 @@ router.put('/posts/:id', auth, validator(v => ({
   const postModel = new models.BlogPost();
   const post = await postModel.update(id, req.body, uid);
   res.json(post);
-}));
-
-//@formatter:off
-/**
- @swagger
- /manage/blog/posts/{id}:
-   get:
-     summary: Get post info
-     tags:
-       - Manage_Blog
-     parameters:
-       - name: id
-         in: path
-         description: Post ID
-         required: true
-     responses:
-       200:
-         schema:
-           type: object
-           $ref: '#/definitions/BlogPosts'
- */
-//@formatter:on
-router.get('/posts/:id', auth, wrapper(async(req, res) => {
-  const result = await (new models.BlogPost()).get(req.params.id);
-  if (!result) {
-    throw new exceptions.ResourceNotFoundException('Post not found');
-  }
-  res.json(result);
 }));
 
 //@formatter:off
