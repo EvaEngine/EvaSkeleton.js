@@ -4,7 +4,7 @@ import models from './entities';
 
 const engine = new EvaEngine({
   projectRoot: `${__dirname}/..`,
-  port: 15638
+  port: process.env.PORT || 15638
 });
 const logger = DI.get('logger');
 const compileDistPath = `${__dirname}/../public`;
