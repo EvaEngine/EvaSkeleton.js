@@ -15,8 +15,4 @@ fs
     models[model.default.name] = model.default;
   });
 
-
-/**
- * @property {Bankcard} models.Bankcard
- */
 export default models;
