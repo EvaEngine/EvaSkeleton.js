@@ -1,10 +1,9 @@
-import merge from 'lodash/merge';
-import { DI } from 'evaengine';
+import { utils } from 'evaengine';
 import schema from './schemas/eva_blog_posts';
 
 module.exports = function (sequelize, DataTypes) {
   const { columns, table } = schema(DataTypes);
-  const BlogPosts = sequelize.define('BlogPosts', merge(columns, {}), merge(table, {
+  const BlogPosts = sequelize.define('BlogPosts', utils.merge(columns, {}), utils.merge(table, {
     classMethods: {
       associate: (entities) => {
         BlogPosts.hasOne(entities.BlogTexts, {

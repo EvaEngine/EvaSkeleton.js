@@ -9,7 +9,8 @@ export default DataTypes => ({
     },
     tagName: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(30),
+      unique: true,
       comment: 'Tag名'
     },
     parentId: {
@@ -40,6 +41,13 @@ export default DataTypes => ({
   table: {
     tableName: 'eva_blog_tags',
     freezeTableName: true,
+    indexes: [
+      {
+        name: 'tagName',
+        unique: true,
+        fields: ['tagName']
+      }
+    ],
     timestamps: false
   }
 });

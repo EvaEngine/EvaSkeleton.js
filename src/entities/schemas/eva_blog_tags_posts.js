@@ -21,6 +21,13 @@ export default DataTypes => ({
   table: {
     tableName: 'eva_blog_tags_posts',
     freezeTableName: true,
+    indexes: [
+      {
+        name: 'tagId',
+        unique: true,
+        fields: ['tagId', 'postId']
+      }
+    ],
     timestamps: false
   }
 });
