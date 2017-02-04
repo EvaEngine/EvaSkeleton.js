@@ -12,6 +12,6 @@
         "gulp",
         "views"
     ],
-    "verbose": true,
+    "verbose": false,
     "ext": "js json pug jade coffee"
 }
