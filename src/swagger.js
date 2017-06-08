@@ -1,4 +1,4 @@
-import { EvaEngine, DI, wrapper, swagger } from 'evaengine';
+import { EvaEngine, DI, wrapper, swagger, exceptions } from 'evaengine';
 import serveStatic from 'serve-static';
 import models from './entities';
 
@@ -6,6 +6,8 @@ const engine = new EvaEngine({
   projectRoot: `${__dirname}/..`,
   port: process.env.PORT || 15638
 });
+engine.bootstrap();
+
 const logger = DI.get('logger');
 const compileDistPath = `${__dirname}/../public`;
 
@@ -26,11 +28,29 @@ app.get('/', wrapper(async(req, res) => {
 app.use(serveStatic(scanner.getSwaggerUIPath()));
 app.use(serveStatic(compileDistPath));
 
-(async() => {
+(async () => {
+  let res = null;
   try {
-    await scanner.exportJson();
+    const docs = await scanner.exportJson();
+    logger.info(`Validating swagger docs by command::: curl -X POST -d @${scanner.swaggerDocsPath} -H "Content-Type:application/json" http://online.swagger.io/validator/debug`);
+    res = await DI.get('http_client').request({
+      url: 'http://online.swagger.io/validator/debug',
+      method: 'POST',
+      json: docs
+    });
+    if (res && res.schemaValidationMessages) {
+      logger.error(res);
+    } else {
+      logger.info('Swagger validation all passed');
+    }
     engine.run();
-  } catch (err) {
-    logger.error(err.stack);
+  } catch (e) {
+    if (e instanceof exceptions.StandardException) {
+      logger.error(e);
+      logger.error('Prev error', e.getPrevError());
+      logger.error(e.getDetails());
+      return;
+    }
+    logger.error(e);
   }
 })();

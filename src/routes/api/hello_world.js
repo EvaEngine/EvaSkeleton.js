@@ -38,6 +38,7 @@ const router = EvaEngine.createRouter();
            $ref: '#/definitions/Login'
      responses:
        200:
+         description: success response
          schema:
            type: object
            $ref: '#/definitions/Token'
@@ -67,9 +68,9 @@ router.post('/login', wrapper(async(req, res) => {
      summary: Hello World
      tags:
        - Demo
-     parameters:
      responses:
        200:
+         description: success response
          schema:
            type: object
            $ref: '#/definitions/Token'
