@@ -1,27 +1,31 @@
-import { EvaEngine, DI, wrapper, swagger, exceptions } from 'evaengine';
+import { EvaEngine, DI, exceptions, wrapper, swagger } from 'evaengine';
 import serveStatic from 'serve-static';
 import models from './entities';
+
+require('dotenv').config();
 
 const engine = new EvaEngine({
   projectRoot: `${__dirname}/..`,
   port: process.env.PORT || 15638
 });
+const logger = DI.get('logger');
 engine.bootstrap();
 
-const logger = DI.get('logger');
 const compileDistPath = `${__dirname}/../public`;
+const config = DI.get('config').get('swagger');
 
 const scanner = new swagger.ExSwagger({
   models,
   logger,
   compileDistPath,
   sourceRootPath: `${__dirname}/../build`,
-  swaggerDocsTemplate: DI.get('config').get('swagger')
+  swaggerDocsTemplate: config,
+  swaggerDocsPath: `${compileDistPath}/${config.host.replace(':', '.')}.json`
 });
 
 
 const app = EvaEngine.getApp();
-app.get('/', wrapper(async(req, res) => {
+app.get('/', wrapper(async (req, res) => {
   const content = await scanner.getSwaggerIndexHtml();
   res.send(content);
 }));
@@ -33,11 +37,11 @@ app.use(serveStatic(compileDistPath));
   try {
     const docs = await scanner.exportJson();
     logger.info(`Validating swagger docs by command::: curl -X POST -d @${scanner.swaggerDocsPath} -H "Content-Type:application/json" http://online.swagger.io/validator/debug`);
-    res = await DI.get('http_client').request({
+    res = process.env.SWAGGER_VALID ? (await DI.get('http_client').request({
       url: 'http://online.swagger.io/validator/debug',
       method: 'POST',
       json: docs
-    });
+    })) : null;
     if (res && res.schemaValidationMessages) {
       logger.error(res);
     } else {
