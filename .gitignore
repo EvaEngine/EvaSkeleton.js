@@ -37,8 +37,9 @@ bower_components
 .node_repl_history
 
 .idea/*
-/coverage
+coverage
 .DS_Store
 config/config.local*
 config/sequelize.json
 .nyc_output/
+yarn.lock
