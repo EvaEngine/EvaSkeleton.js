@@ -17,7 +17,7 @@
     "swagger": "rm -r ./build/* && npm run build && SWAGGER_VALID=1 node build/swagger.js",
     "swagger-dev": "rm -r ./build/* && npm run build && nodemon --ignore 'node_modules/*' --ignore '**/*.json' --exec babel-node src/swagger.js",
     "lint": "./node_modules/.bin/eslint src/* --ext .js",
-    "build": "./node_modules/.bin/babel -D -s -d build/  -x '.mjs' src/",
+    "build": "babel -D -s -d build/ src/",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
   },
