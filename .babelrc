@@ -1,7 +1,16 @@
 {
   "presets": [
-    "stage-3",
-    "es2015-node6"
+    [
+      "env",
+      {
+        "targets": {
+          "node": "8.9.1"
+        },
+        "modules": false,
+        "useBuiltIns": true,
+        "debug": false
+      }
+    ]
   ],
   "plugins": [
     [

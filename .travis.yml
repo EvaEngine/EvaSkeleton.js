@@ -1,11 +1,14 @@
 language: node_js
-services:
-  - redis-server
+cache:
+  directories:
+    - ~/.npm
+notifications:
+  email: false
 node_js:
-   - "6.9.4"
-   - "7.4.0"
-script:
-    - "npm run lint"
-    - "npm test"
+  - '9'
+  - '8'
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - npm run travis-deploy-once "npm run semantic-release"
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/

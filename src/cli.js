@@ -30,3 +30,7 @@ global.p = (...args) => {
   }
   return true;
 })();
+
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error('unhandledRejection:', reason, promise);
+});

@@ -39,3 +39,7 @@ app.use('/v1', require('./routes/api/hello_world'));
 
 
 engine.run();
+
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error('unhandledRejection:', reason, promise);
+});
