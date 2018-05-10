@@ -19,6 +19,14 @@ cd myproject
 wget https://github.com/EvaEngine/EvaSkeleton.js/archive/master.tar.gz -O master.tar.gz && tar xvf master.tar.gz --strip 1 && rm master.tar.gz
 ```
 
+## Run by Docker
+
+```
+docker run -p 3000:3000 -it allovince/evaskeleton:latest npm start
+```
+
+Then visit `http://localhost:3000/`
+
 ## Install and Start develop:
 
 Requirements:
