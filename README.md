@@ -23,7 +23,7 @@ wget https://github.com/EvaEngine/EvaSkeleton.js/archive/master.tar.gz -O master
 
 Requirements:
 
-- NodeJS >= v4.4.5
+- NodeJS >= v8
 
 
 *1*. Install global dependencies

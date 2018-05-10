@@ -1,18 +1,30 @@
+sudo: false
 language: node_js
 cache:
   directories:
     - ~/.npm
 notifications:
   email: false
+
 node_js:
-  - '9'
+  - '10'
   - '8'
+install:
+  - if [[ "${TRAVIS_TAG}" == "" ]]; then npm install; fi
 script:
-- npm run build
-- npm run lint
-- npm test
+  - if [[ "${TRAVIS_TAG}" == "" ]]; then npm run lint; fi
+  - if [[ "${TRAVIS_TAG}" == "" ]]; then npm run ava; fi
 after_success:
-  - npm run travis-deploy-once "npm run semantic-release"
-branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
+  - if [[ "${TRAVIS_BRANCH}" == "master"  ]] && [[ "${TRAVIS_TAG}" == "" ]]; then npm run travis-deploy-once "npm run semantic-release"; fi
+jobs:
+  include:
+    - stage: docker release
+      node_js: '8'
+      if: tag IS present
+      script:
+        - docker build -t allovince/evaskeleton .
+        - docker tag allovince/evaskeleton allovince/evaskeleton:$TRAVIS_TAG
+        - docker images
+        - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+        - docker push allovince/evaskeleton:latest;
+        - docker push allovince/evaskeleton:$TRAVIS_TAG;

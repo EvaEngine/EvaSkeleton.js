@@ -3,7 +3,7 @@ list:
 	@echo "pre-build"
 
 pre-build:
-	npm install -g nodemon babel-cli sequelize-cli
+	npm install -g nodemon babel-cli tramp-cli
 
 build: install
 
@@ -13,10 +13,7 @@ install:
 	npm run build
 
 migrate:
-	sequelize db:migrate
-
-seeder:
-	sequelize db:seed:all --harmony
+	tramp migrate
 
 
 docker-proxy:
