@@ -3,23 +3,20 @@ language: node_js
 cache:
   directories:
     - ~/.npm
-notifications:
-  email: false
+install: true
 
-node_js:
-  - '10'
-  - '8'
-install:
-  - if [[ "${TRAVIS_TAG}" == "" ]]; then npm install; fi
-script:
-  - if [[ "${TRAVIS_TAG}" == "" ]]; then npm run lint; fi
-  - if [[ "${TRAVIS_TAG}" == "" ]]; then npm run ava; fi
-after_success:
-  - if [[ "${TRAVIS_BRANCH}" == "master"  ]] && [[ "${TRAVIS_TAG}" == "" ]]; then npm run travis-deploy-once "npm run semantic-release"; fi
 jobs:
   include:
+    - stage: test and deploy
+      node_js: '10'
+      if: branch = master AND tag IS blank
+      script:
+        - npm install
+        - npm run lint
+        - npm run ava
+        - npm run travis-deploy-once "npm run semantic-release"
     - stage: docker release
-      node_js: '8'
+      node_js: '10'
       if: tag IS present
       script:
         - docker build -t allovince/evaskeleton .
