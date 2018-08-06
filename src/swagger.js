@@ -1,4 +1,6 @@
-import { EvaEngine, DI, exceptions, wrapper, swagger } from 'evaengine';
+import {
+  EvaEngine, DI, exceptions, wrapper, swagger
+} from 'evaengine';
 import serveStatic from 'serve-static';
 import models from './entities';
 

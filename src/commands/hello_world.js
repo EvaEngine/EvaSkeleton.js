@@ -26,4 +26,3 @@ export default class HelloWorld extends Command {
     return logger.info('Hello world!');
   }
 }
-
