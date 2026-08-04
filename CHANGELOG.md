@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/EvaEngine/EvaSkeleton.js/compare/v2.0.0...v2.0.1) (2026-08-04)
+
+
+### Bug Fixes
+
+* split Docker build into separate workflow triggered by tags ([15f6108](https://github.com/EvaEngine/EvaSkeleton.js/commit/15f610801ca287a96c05a9b752f5a8960f38e6c3))
+
 # [2.0.0](https://github.com/EvaEngine/EvaSkeleton.js/compare/v1.1.1...v2.0.0) (2026-08-04)
 
 
