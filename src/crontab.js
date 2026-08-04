@@ -1,11 +1,16 @@
-import { EvaEngine, DI } from 'evaengine';
-import * as HelloWorldCommands from './commands/hello_world';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import evaengine from 'evaengine';
+import HelloWorldCommand from './commands/hello_world.js';
+
+const { EvaEngine, DI } = evaengine;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const engine = new EvaEngine({
   projectRoot: `${__dirname}/..`
 }, 'cli');
 engine.registerCommands([
-  HelloWorldCommands
+  HelloWorldCommand
 ]);
 const logger = DI.get('logger');
 const timeout = process.env.STOP_TIMEOUT || 60;

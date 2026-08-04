@@ -1,8 +1,9 @@
-import { EvaEngine, wrapper, exceptions } from 'evaengine';
+import evaengine from 'evaengine';
 
+const { EvaEngine, wrapper, exceptions } = evaengine;
 const router = EvaEngine.createRouter();
 
-//@formatter:off
+// @formatter:off
 /**
  @swagger
  Token:
@@ -45,8 +46,8 @@ const router = EvaEngine.createRouter();
  @throws {ResourceNotFoundException} Login user not exists
  @throws {InvalidArgumentException}  Input invalided
  */
-//@formatter:on
-router.post('/login', wrapper(async(req, res) => {
+// @formatter:on
+router.post('/login', wrapper(async (req, res) => {
   const { username, password } = req.body;
   if (username !== 'evaengine') {
     throw new exceptions.ResourceNotFoundException('User not exist, try use evaengine as user name');
@@ -60,7 +61,7 @@ router.post('/login', wrapper(async(req, res) => {
   });
 }));
 
-//@formatter:off
+// @formatter:off
 /**
  @swagger
  /hello/world:
@@ -76,11 +77,11 @@ router.post('/login', wrapper(async(req, res) => {
            $ref: '#/definitions/Token'
  @throws {UnauthorizedException}  Permission not allowed
  */
-//@formatter:on
-router.get('/hello/world', wrapper(async(req, res) => {
+// @formatter:on
+router.get('/hello/world', wrapper(async (req, res) => {
   res.json({
     hello: 'world'
   });
 }));
 
-module.exports = router;
+export default router;

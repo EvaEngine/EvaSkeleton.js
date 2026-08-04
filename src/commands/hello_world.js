@@ -1,4 +1,6 @@
-import { Command, DI } from 'evaengine';
+import evaengine from 'evaengine';
+
+const { Command, DI } = evaengine;
 
 export default class HelloWorld extends Command {
   static getName() {

@@ -1,19 +1,23 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const models = {};
 
-fs
+const files = fs
   .readdirSync(__dirname)
   .filter((file) => {
     const fileArray = file.split('.');
     return (file.indexOf('.') !== 0)
-      && (['js', 'es6'].indexOf(fileArray.pop()) !== -1)
+      && (['js', 'mjs'].indexOf(fileArray.pop()) !== -1)
       && (fileArray[0] !== 'index');
-  })
-  .forEach((file) => {
-    const model = require(path.join(__dirname, file)); //eslint-disable-line
-    models[model.default.name] = model.default;
   });
+
+await Promise.all(files.map(async (file) => {
+  const { default: model } = await import(path.join(__dirname, file));
+  models[model.name] = model;
+}));
 
 export default models;

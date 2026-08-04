@@ -1,8 +1,9 @@
-import { EvaEngine, wrapper } from 'evaengine';
+import evaengine from 'evaengine';
 
-const router = EvaEngine.createRouter(); // eslint-disable-line new-cap
+const { EvaEngine, wrapper } = evaengine;
+const router = EvaEngine.createRouter();
 
-router.get('/', wrapper(async(req, res) => {
+router.get('/', wrapper(async (req, res) => {
   res.render('index', { title: 'Express' });
 }));
-module.exports = router;
+export default router;

@@ -1,13 +1,33 @@
-FROM node:8.11.1-alpine
+# ---- Build Stage ----
+FROM node:24-alpine AS build
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run lint && npm test
+
+# ---- Production Stage ----
+FROM node:24-alpine
 
 RUN apk add --no-cache tzdata && \
-    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone
 
-COPY . /opt/htdocs/EvaSkeleton.js
-WORKDIR /opt/htdocs/EvaSkeleton.js
+WORKDIR /app
 
-RUN npm install && npm run build && npm prune --production
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+
+COPY --from=build /app/src ./src
+COPY --from=build /app/config ./config
+COPY --from=build /app/views ./views
+COPY --from=build /app/public ./public
 
 EXPOSE 3000
 
-CMD node ./build/app.js
+USER node
+
+CMD ["node", "src/app.js"]

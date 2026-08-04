@@ -1,11 +1,16 @@
-import { EvaEngine, DI, exceptions } from 'evaengine';
-import * as HelloWorldCommands from './commands/hello_world';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import evaengine from 'evaengine';
+import HelloWorldCommand from './commands/hello_world.js';
+
+const { EvaEngine, DI, exceptions } = evaengine;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const engine = new EvaEngine({
   projectRoot: `${__dirname}/..`
 }, 'cli');
 engine.registerCommands([
-  HelloWorldCommands
+  HelloWorldCommand
 ]);
 
 const logger = DI.get('logger');
@@ -13,8 +18,7 @@ global.p = (...args) => {
   logger.debug(...args);
 };
 
-
-(async() => {
+(async () => {
   try {
     await engine.runCLI();
   } catch (e) {

@@ -3,14 +3,13 @@ list:
 	@echo "pre-build"
 
 pre-build:
-	npm install -g nodemon babel-cli tramp-cli
+	npm install -g nodemon tramp-cli
 
 build: install
 
 install:
 	git pull
 	npm install
-	npm run build
 
 migrate:
 	tramp migrate

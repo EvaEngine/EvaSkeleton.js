@@ -1,4 +1,5 @@
-import { Entities } from 'evaengine';
+import evaengine from 'evaengine';
 
-const entities = new Entities(__dirname);
+const { Entities } = evaengine;
+const entities = new Entities(new URL('.', import.meta.url).pathname);
 export default entities;

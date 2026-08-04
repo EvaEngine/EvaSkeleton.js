@@ -1,7 +1,6 @@
 # EvaSkeleton.js
 
-[![Build Status](https://travis-ci.org/EvaEngine/EvaSkeleton.js.svg?branch=master)](https://travis-ci.org/EvaEngine/EvaSkeleton.js)
-[![Dependencies Status](https://david-dm.org/EvaEngine/EvaSkeleton.js.svg)](https://david-dm.org/EvaEngine/EvaSkeleton.js)
+[![CI](https://github.com/EvaEngine/EvaSkeleton.js/actions/workflows/ci.yml/badge.svg)](https://github.com/EvaEngine/EvaSkeleton.js/actions/workflows/ci.yml)
 [![License](https://img.shields.io/npm/l/evaengine.svg?maxAge=2592000?style=plastic)](https://github.com/EvaEngine/EvaSkeleton.js/blob/master/LICENSE)
 
 A Skeleton project based on [EvaEngine.js](https://github.com/EvaEngine/EvaEngine.js)
@@ -31,19 +30,20 @@ Then visit `http://localhost:3000/`
 
 Requirements:
 
-- NodeJS >= v8
+- Node.js >= v22 (recommended: v24)
+- npm
+- No Babel is required — the project runs on native ESM (`"type": "module"`)
 
-
-*1*. Install global dependencies
-
-```
-make pre-build
-```
-
-*2*. Install project dependencies
+*1*. Install dependencies
 
 ```
-make build
+npm install
+```
+
+*2*. Copy the environment template
+
+```
+cp .env.example .env
 ```
 
 *3*. Start project (development mode)
@@ -52,7 +52,7 @@ make build
 npm run dev
 ```
 
-Visit http://localhost:3000/ to see HelloWorld web page demo
+Visit http://localhost:3000/ to see the Hello World web page demo.
 
 *4*. Generate API documents
 
@@ -60,16 +60,15 @@ Visit http://localhost:3000/ to see HelloWorld web page demo
 npm run swagger-dev
 ```
 
-Visit http://localhost:15638/ to see Swagger document demo
-
+Visit http://localhost:15638/ to see the Swagger demo.
 
 *5*. CLI command (development mode)
 
 ```
-babel-node --harmony src/cli.js hello:world
+node src/cli.js hello:world
 ```
 
-*6*. Run unit test
+*6*. Run tests
 
 ```
 npm test
@@ -89,10 +88,9 @@ make pre-build
 make build
 ```
 
-*3*. Compile & Start project
+*3*. Start project
 
 ```
-npm run build
 npm start
 ```
 

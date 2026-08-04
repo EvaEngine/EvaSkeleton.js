@@ -1,10 +1,15 @@
-import {
-  EvaEngine, DI, exceptions, wrapper, swagger
-} from 'evaengine';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import serveStatic from 'serve-static';
-import models from './entities';
+import evaengine from 'evaengine';
+import entities from './entities/index.js';
 
-require('dotenv').config();
+import 'dotenv/config';
+
+const {
+  EvaEngine, DI, exceptions, wrapper, swagger
+} = evaengine;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const engine = new EvaEngine({
   projectRoot: `${__dirname}/..`,
@@ -17,10 +22,10 @@ const compileDistPath = `${__dirname}/../public`;
 const config = DI.get('config').get('swagger');
 
 const scanner = new swagger.ExSwagger({
-  models,
+  models: entities,
   logger,
   compileDistPath,
-  sourceRootPath: `${__dirname}/../build`,
+  sourceRootPath: `${__dirname}`,
   swaggerDocsTemplate: config,
   swaggerDocsPath: `${compileDistPath}/${config.host.replace(':', '.')}.json`
 });
